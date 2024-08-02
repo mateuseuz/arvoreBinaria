@@ -83,55 +83,82 @@ public class ArvoreBinaria {
                 }
             }
 
+            if(atual == null) {
+                return;
+            }
+
             if(pai == null) {
                 if(atual.getNoDir() == null) {
                     this.raiz = atual.getNoEsq();
                 } else if(atual.getNoEsq() == null) {
                     this.raiz = atual.getNoDir();
                 } else {
-                    for(temporario = atual, filho = atual.getNoEsq();
-                    filho.getNoDir() != null;
-                    temporario = filho, filho = filho.getNoEsq()) {
-                        if(filho != atual.getNoEsq()) {
-                            temporario.setNoDir(filho.getNoEsq());
-                            filho.setNoEsq(raiz.getNoEsq());
-                        }
+                    temporario = atual;
+                    filho = atual.getNoDir();
+
+                    while(filho.getNoEsq() != null) {
+                        temporario = filho;
+                        filho = filho.getNoEsq();
                     }
 
-                    filho.setNoDir(raiz.getNoDir());
-                    raiz = filho;
-                }
-            } else if(atual.getNoDir() == null) {
-                if(pai.getNoEsq() == atual) {
-                    pai.setNoEsq(atual.getNoEsq());
-                } else {
-                    pai.setNoDir(atual.getNoEsq());
-                }
-            } else if(atual.getNoEsq() == null) {
-                if(pai.getNoEsq() == atual) {
-                    pai.setNoEsq(atual.getNoDir());
-                } else {
-                    pai.setNoDir(atual.getNoDir());
+                    if(filho != atual.getNoDir()) {
+                        temporario.setNoEsq(filho.getNoDir());
+                        filho.setNoDir(atual.getNoDir());
+                    }
+
+                    filho.setNoEsq(atual.getNoEsq());
+                    this.raiz = filho;
                 }
             } else {
-                for(temporario = atual, filho = atual.getNoEsq();
-                    filho.getNoDir() != null;
-                    temporario = filho, filho = filho.getNoDir()) {
-                    if(filho != atual.getNoEsq()) {
+                // Nó com nenhum filho (nó folha)
+                if (atual.getNoDir() == null && atual.getNoEsq() == null) {
+                    if (pai.getNoEsq() == atual) {
+                        pai.setNoEsq(null);
+                    } else {
+                        pai.setNoDir(null);
+                    }
+                }
+                // Nó com um filho à esquerda
+                else if (atual.getNoDir() == null) {
+                    if (pai.getNoEsq() == atual) {
+                        pai.setNoEsq(atual.getNoEsq());
+                    } else {
+                        pai.setNoDir(atual.getNoEsq());
+                    }
+                }
+                // Nó com um filho à direita
+                else if (atual.getNoEsq() == null) {
+                    if (pai.getNoEsq() == atual) {
+                        pai.setNoEsq(atual.getNoDir());
+                    } else {
+                        pai.setNoDir(atual.getNoDir());
+                    }
+                }
+                // Nó com dois filhos
+                else {
+                    temporario = atual;
+                    filho = atual.getNoEsq();
+
+                    while (filho.getNoDir() != null) {
+                        temporario = filho;
+                        filho = filho.getNoDir();
+                    }
+
+                    if (filho != atual.getNoEsq()) {
                         temporario.setNoDir(filho.getNoEsq());
                         filho.setNoEsq(atual.getNoEsq());
                     }
 
                     filho.setNoDir(atual.getNoDir());
 
-                    if(pai.getNoEsq() == atual) {
+                    if (pai.getNoEsq() == atual) {
                         pai.setNoEsq(filho);
                     } else {
                         pai.setNoDir(filho);
                     }
                 }
             }
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             System.out.println("\nA árvore não possui o elemento inserido!");
         }
     }
