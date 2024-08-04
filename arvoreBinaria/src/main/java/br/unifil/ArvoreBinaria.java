@@ -73,6 +73,7 @@ public class ArvoreBinaria {
             No filho = null;
             No temporario = null;
 
+            // Para localizar o nó que será removido
             while(atual != null && atual.getConteudo() != conteudo) {
                 pai = atual;
 
@@ -83,10 +84,13 @@ public class ArvoreBinaria {
                 }
             }
 
+            // Se o primeiro nó (raiz) for nulo, a árvore está vazia
             if(atual == null) {
+                System.out.println("A árvore está vazia!");
                 return;
             }
 
+            // Se o nó a ser removido for a raiz, é preciso saber a quantidade de filhos dela
             if(pai == null) {
                 if(atual.getNoDir() == null) {
                     this.raiz = atual.getNoEsq();
@@ -110,7 +114,7 @@ public class ArvoreBinaria {
                     this.raiz = filho;
                 }
             } else {
-                // Nó com nenhum filho (nó folha)
+                // Nó sem filhos (nó folha)
                 if (atual.getNoDir() == null && atual.getNoEsq() == null) {
                     if (pai.getNoEsq() == atual) {
                         pai.setNoEsq(null);
@@ -137,19 +141,19 @@ public class ArvoreBinaria {
                 // Nó com dois filhos
                 else {
                     temporario = atual;
-                    filho = atual.getNoEsq();
+                    filho = atual.getNoDir();
 
-                    while (filho.getNoDir() != null) {
+                    while(filho.getNoEsq() != null) {
                         temporario = filho;
-                        filho = filho.getNoDir();
+                        filho = filho.getNoEsq();
                     }
 
-                    if (filho != atual.getNoEsq()) {
-                        temporario.setNoDir(filho.getNoEsq());
-                        filho.setNoEsq(atual.getNoEsq());
+                    if(filho != atual.getNoDir()) {
+                        temporario.setNoEsq(filho.getNoDir());
+                        filho.setNoDir(atual.getNoDir());
                     }
 
-                    filho.setNoDir(atual.getNoDir());
+                    filho.setNoEsq(atual.getNoEsq());
 
                     if (pai.getNoEsq() == atual) {
                         pai.setNoEsq(filho);

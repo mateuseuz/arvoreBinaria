@@ -7,9 +7,9 @@ public class Main {
         arvoreBinaria.inserir(3);
         arvoreBinaria.inserir(2);
         arvoreBinaria.inserir(9);
-        arvoreBinaria.inserir(7);
-        arvoreBinaria.inserir(8);
+        arvoreBinaria.inserir(15);
         arvoreBinaria.inserir(12);
+        arvoreBinaria.inserir(7);
         System.out.println("\nPré-ordem: ");
         arvoreBinaria.preOrdem(arvoreBinaria.getRaiz());
         System.out.println("\nEm ordem: ");
