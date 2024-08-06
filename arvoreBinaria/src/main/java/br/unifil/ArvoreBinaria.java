@@ -86,7 +86,7 @@ public class ArvoreBinaria {
 
             // Se o primeiro nó (raiz) for nulo, a árvore está vazia
             if(atual == null) {
-                System.out.println("A árvore está vazia!");
+                System.out.println("Nó inexistente!");
                 return;
             }
 
